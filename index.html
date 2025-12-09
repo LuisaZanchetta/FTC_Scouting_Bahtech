@@ -2,52 +2,121 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>FTC Scouting - Bahtech</title>
 
-  <!-- React -->
+  <!-- React / ReactDOM -->
   <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 
-  <!-- Babel (permite usar JSX sem build) -->
+  <!-- Babel para JSX no browser -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
   <!-- Axios -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-  <!-- Recharts -->
+  <!-- Recharts (UMD) -->
   <script src="https://unpkg.com/recharts/umd/Recharts.min.js"></script>
 
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
+    :root{
+      --red-dark:#7b0008;
+      --black:#0b0b0b;
+      --gray:#bfc3c6;
+      --white:#ffffff;
+      --card-bg: #111213;
     }
-
-    .menu button {
-      margin-right: 8px;
-      padding: 8px 14px;
-      cursor: pointer;
+    body{
+      margin:0;
+      font-family: "Inter", Arial, sans-serif;
+      background: linear-gradient(180deg,#0f0f10 0%, #151617 100%);
+      color:var(--white);
+      padding:24px;
     }
+    .container{
+      max-width:1100px;
+      margin:0 auto;
+    }
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:18px;
+    }
+    header h1{
+      margin:0;
+      color:var(--red-dark);
+      letter-spacing:1px;
+    }
+    nav {
+      display:flex;
+      gap:8px;
+    }
+    .btn {
+      background:transparent;
+      border:2px solid var(--gray);
+      color:var(--gray);
+      padding:8px 12px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:600;
+    }
+    .btn.primary{
+      background: var(--red-dark);
+      color:var(--white);
+      border-color: var(--red-dark);
+    }
+    .card{
+      background: rgba(255,255,255,0.03);
+      padding:16px;
+      border-radius:10px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+      margin-bottom:16px;
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    input, textarea, select {
+      width:100%;
+      padding:8px 10px;
+      margin:6px 0 12px 0;
+      border-radius:6px;
+      border:1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.02);
+      color:var(--white);
+    }
+    label{ font-size:0.9rem; color:var(--gray); }
+    .row { display:flex; gap:8px; }
+    .col { flex:1; }
+    footer{ color:var(--gray); margin-top:28px; text-align:center; font-size:0.9rem; }
+    .small { font-size:0.9rem; color:var(--gray); }
+    .team-list { display:flex; gap:8px; flex-wrap:wrap; }
+    .team-pill { background: rgba(255,255,255,0.04); padding:6px 10px; border-radius:20px; border:1px solid rgba(255,255,255,0.03); }
   </style>
 </head>
-
 <body>
+  <div class="container">
+    <header>
+      <h1>FTC Scouting — Bahtech</h1>
+      <nav>
+        <!-- estes botões chamam window.setPage se você ainda tiver eles -->
+        <button class="btn" onclick="setPage && setPage('scout')">Enviar Scouting</button>
+        <button class="btn" onclick="setPage && setPage('dashboard')">Dashboard</button>
+        <button class="btn" onclick="setPage && setPage('teams')">Equipes</button>
+      </nav>
+    </header>
 
-  <h1>FTC Scouting Bahtech</h1>
+    <div id="root"></div>
 
-  <div class="menu">
-    <button onclick="setPage('scout')">Formulário de Scouting</button>
-    <button onclick="setPage('dashboard')">Dashboard</button>
+    <footer>
+      <div class="small">Bahtech • Scouting básico com Google Sheets • Frontend React (sem build)</div>
+    </footer>
   </div>
 
-  <div id="root"></div>
-
-  <!-- Seus scripts -->
+  <!-- seus scripts React/Babel -->
   <script type="text/babel" src="sheets.js"></script>
+  <script type="text/babel" src="teams.js"></script>
   <script type="text/babel" src="scoutForm.js"></script>
   <script type="text/babel" src="dashboard.js"></script>
   <script type="text/babel" src="app.js"></script>
-
 </body>
 </html>

@@ -7,4 +7,4 @@ database: {
 dialect: "sqlite",
 storage: "./db.sqlite"
 }
-}
+};

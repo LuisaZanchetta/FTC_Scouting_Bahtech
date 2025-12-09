@@ -1,32 +1,53 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>FTC Scouting</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FTC Scouting - Bahtech</title>
 
   <!-- React -->
   <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 
-  <!-- Babel (permite usar React + JSX sem build) -->
+  <!-- Babel (permite usar JSX sem build) -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Axios -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
   <!-- Recharts -->
   <script src="https://unpkg.com/recharts/umd/Recharts.min.js"></script>
 
-  <!-- Axios -->
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .menu button {
+      margin-right: 8px;
+      padding: 8px 14px;
+      cursor: pointer;
+    }
+  </style>
 </head>
+
 <body>
+
+  <h1>FTC Scouting Bahtech</h1>
+
+  <div class="menu">
+    <button onclick="setPage('scout')">Formulário de Scouting</button>
+    <button onclick="setPage('dashboard')">Dashboard</button>
+  </div>
 
   <div id="root"></div>
 
-  <!-- Seus scripts React usando JSX -->
+  <!-- Seus scripts -->
   <script type="text/babel" src="sheets.js"></script>
-<script type="text/babel" src="scoutForm.js"></script>
-<script type="text/babel" src="dashboard.js"></script>
-<script type="text/babel" src="app.js"></script>
+  <script type="text/babel" src="scoutForm.js"></script>
+  <script type="text/babel" src="dashboard.js"></script>
+  <script type="text/babel" src="app.js"></script>
 
 </body>
 </html>

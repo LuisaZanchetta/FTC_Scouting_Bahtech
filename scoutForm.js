@@ -1,31 +1,90 @@
-function ScoutForm() {
-  const [form, setForm] = React.useState({});
+// scoutForm.js
+function ScoutForm({ onSent }) {
+  const [form, setForm] = React.useState({
+    team: "",
+    match: "",
+    autonomousScore: "",
+    teleopScore: "",
+    endgameScore: "",
+    notes: "",
+    scoutName: ""
+  });
+  const [sending, setSending] = React.useState(false);
 
   function update(e) {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm(prev => ({ ...prev, [name]: value }));
   }
 
   async function submit() {
-    await sendScoutEntry(form);
-    alert("Scouting enviado!");
+    try {
+      setSending(true);
+      // transformar campos numéricos
+      const payload = {
+        ...form,
+        autonomousScore: Number(form.autonomousScore) || 0,
+        teleopScore: Number(form.teleopScore) || 0,
+        endgameScore: Number(form.endgameScore) || 0,
+        timestamp: new Date().toISOString()
+      };
+      await sendScoutEntry(payload);
+      alert("Scouting enviado com sucesso!");
+      setForm({
+        team: "",
+        match: "",
+        autonomousScore: "",
+        teleopScore: "",
+        endgameScore: "",
+        notes: "",
+        scoutName: ""
+      });
+      onSent && onSent();
+    } catch (err) {
+      console.error(err);
+      alert("Erro ao enviar. Verifique a URL do Apps Script e permissões.");
+    } finally {
+      setSending(false);
+    }
   }
 
   return (
-    <div>
+    <div className="card">
       <h2>Enviar Scouting</h2>
 
-      <input name="team" placeholder="Team" onChange={update} /><br/>
-      <input name="match" placeholder="Match" onChange={update} /><br/>
+      <label>Equipe (número ou nome)</label>
+      <input name="team" value={form.team} onChange={update} placeholder="ex: 12345 ou Bahtech" />
 
-      <input name="autonomousScore" placeholder="Autonomous" onChange={update} /><br/>
-      <input name="teleopScore" placeholder="TeleOp" onChange={update} /><br/>
-      <input name="endgameScore" placeholder="Endgame" onChange={update} /><br/>
+      <label>Match</label>
+      <input name="match" value={form.match} onChange={update} placeholder="nº do match" />
 
-      <textarea name="notes" placeholder="Notes" onChange={update}></textarea><br/>
+      <div className="row">
+        <div className="col">
+          <label>Autonomous (pontos)</label>
+          <input name="autonomousScore" value={form.autonomousScore} onChange={update} type="number" />
+        </div>
+        <div className="col">
+          <label>TeleOp (pontos)</label>
+          <input name="teleopScore" value={form.teleopScore} onChange={update} type="number" />
+        </div>
+      </div>
 
-      <input name="scoutName" placeholder="Scout Name" onChange={update} /><br/>
+      <label>Endgame (pontos)</label>
+      <input name="endgameScore" value={form.endgameScore} onChange={update} type="number" />
 
-      <button onClick={submit}>Enviar</button>
+      <label>Notas</label>
+      <textarea name="notes" value={form.notes} onChange={update} rows="3" />
+
+      <label>Nome do Scout</label>
+      <input name="scoutName" value={form.scoutName} onChange={update} />
+
+      <div style={{display:"flex", gap:8}}>
+        <button className="btn primary" onClick={submit} disabled={sending}>
+          {sending ? "Enviando..." : "Enviar"}
+        </button>
+        <button className="btn" onClick={() => { setForm({ team:"", match:"", autonomousScore:"", teleopScore:"", endgameScore:"", notes:"", scoutName:"" }) }}>
+          Limpar
+        </button>
+      </div>
     </div>
   );
 }

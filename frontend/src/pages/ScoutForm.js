@@ -1,22 +1,34 @@
 import { useState } from "react";
-import api from "../services/api";
+import { sendScoutEntry } from "../services/sheets";
 
 export default function ScoutForm() {
-const [data, setData] = useState({});
+  const [form, setForm] = useState({});
 
-const send = async () => {
-const res = await api.post("/scouts", data);
-alert(JSON.stringify(res.data));
-};
+  function update(e) {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  }
 
-return (
-<div>
-<h2>Scout Form</h2>
-<input placeholder="Auto Score" onChange={(e) => setData({ ...data, autonomousScore: e.target.value })} />
-<input placeholder="TeleOp Score" onChange={(e) => setData({ ...data, teleopScore: e.target.value })} />
-<input placeholder="Endgame Score" onChange={(e) => setData({ ...data, endgameScore: e.target.value })} />
-<textarea placeholder="Notes" onChange={(e) => setData({ ...data, notes: e.target.value })}></textarea>
-<button onClick={send}>Submit</button>
-</div>
-);
+  async function submit() {
+    await sendScoutEntry(form);
+    alert("Scouting enviado com sucesso!");
+  }
+
+  return (
+    <div>
+      <h2>Enviar Scouting</h2>
+
+      <input name="team" placeholder="Team Number" onChange={update} /><br />
+      <input name="match" placeholder="Match Number" onChange={update} /><br />
+
+      <input name="autonomousScore" placeholder="Autonomous Score" onChange={update} /><br />
+      <input name="teleopScore" placeholder="TeleOp Score" onChange={update} /><br />
+      <input name="endgameScore" placeholder="Endgame Score" onChange={update} /><br />
+
+      <textarea name="notes" placeholder="Observações" onChange={update}></textarea><br />
+
+      <input name="scoutName" placeholder="Scout Name" onChange={update} /><br />
+
+      <button onClick={submit}>Enviar</button>
+    </div>
+  );
 }

@@ -1,11 +1,13 @@
 function App() {
+  const [page, setPage] = React.useState("scout");
+
+  // deixamos a função global para os botões do HTML
+  window.setPage = setPage;
+
   return (
     <div>
-      <h1>FTC Scouting</h1>
-
-      <ScoutForm />
-      <hr />
-      <Dashboard />
+      {page === "scout" && <ScoutForm />}
+      {page === "dashboard" && <Dashboard />}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 // sheets.js
 // URL do seu Apps Script
-const API_URL = "https://script.google.com/macros/s/AKfycbyU_6mDlW12lmnLY0Khfjj_2d7tjFGYcux-LtUaLMGh4vAe6znGc0hotERTM7ZsZp3a/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbyA9lfkVGK6l8yFMgolFbYkgXsbn11LkCfHTdmZQEjD6M2T4WRlijV-nC8T50h3LNjt/exec";
 
 // envia dados do formulário de scouting
 function sendScoutEntry(data) {
